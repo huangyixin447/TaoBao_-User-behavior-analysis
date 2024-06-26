@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask</title>
+    <style>
+        .box{
+            width: 600px;
+            height: 400px;
+            border: solid 1px black;
+            margin: auto;
+        }
+    </style>
+    <script src="../static/drawbar.js"></script>
+    <script src="../static/echarts.js"></script>
+    <script src="../static/jquery-3.7.1.js"></script>
+
+</head>
+<body>
+    <div class="box" id="barchart"></div>
+    <script>
+       let timer=setInterval(()=>{
+            $.post("http://127.0.0.1:5001/checkstatus",
+            function (data){
+                checkdData(data)
+            }
+            )
+       },300)
+
+
+       function checkdData(data) {
+           var status = JSON.parse(data)
+           console.log(status)
+           let inst = echarts.init(document.getElementById('barchart'));
+           let opt = drawpie(status['percentage']);
+           inst.setOption(opt);
+           if((status['isrunning']==false)&&(status['percentage']>99.9)){
+               clearInterval(timer);
+           {#    开始数据展示#}
+              $.post("http://127.0.0.1:5001/getdata",function (data){
+                   getdata(data);
+
+               })
+           }
+       }
+       function getdata(data){
+           var tmpdata=JSON.parse(data);
+           var xdata=tmpdata['xdata']
+           var ydata=tmpdata['ydata']
+           console.log(xdata,ydata)
+           let inst= echarts.init(document.getElementById("barchart"))
+           let opt= drawbar('操作统计',xdata,ydata)
+           inst.setOption(opt)
+
+       }
+
+    </script>
+</body>
+</html>

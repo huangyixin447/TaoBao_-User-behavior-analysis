@@ -1,0 +1,198 @@
+/* div样式 */
+/* body{
+    background: -webkit-linear-gradient(0deg, #0840C8, #06297D);
+    height: 100vh;
+}*/
+.container {
+    width: 1033px;
+    height: 728px;
+    background-color: rgba(7, 41, 66, 0.9);
+    margin: auto;
+    overflow: hidden; /*解决margin-top无效的问题*/
+}
+
+.corner {
+    position: relative;
+    border: 1px solid rgba(27, 90, 118, 0.7);
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.top-left {
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #81BCFF;
+    border-width: 1px 0 0 1px;
+}
+
+.top-right {
+    position: absolute;
+    right: -1px;
+    top: -1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #81BCFF;
+    border-width: 1px 1px 0 0;
+}
+
+.bottom-left {
+    position: absolute;
+    right: -1px;
+    bottom: -1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #81BCFF;
+    border-width: 0 1px 1px 0;
+}
+
+.bottom-right {
+    position: absolute;
+    left: -1px;
+    bottom: -1px;
+    padding: 5px;
+    border-style: solid;
+    border-color: #81BCFF;
+    border-width: 0 0 1px 1px;
+}
+
+/* 按钮 */
+.btn1 {
+    width: 90px;
+    height: 26px;
+    border: solid 2px #dcdcdc;
+    /* padding:4px 20px 4px 20px; */
+    color: rgb(177, 186, 195);
+    font-weight: bold;
+    background-color: rgba(7, 41, 66, 0.9);
+    border-color: rgb(27, 90, 118);
+    border-width: 1px;
+    position: relative;
+    top: 20px;
+    line-height: 20px;
+    cursor: pointer;
+
+}
+
+
+/* 布局 */
+.boxtop {
+    height: 50px;
+    width: 1004px;
+    color: white;
+    font-family: '微软雅黑';
+    font-size: 160%;
+    text-align: center;
+    line-height: 50px
+}
+
+.box1 {
+    position: relative;
+    left: 0px;
+    height: 70px;
+    width: 1015px;
+    top: 10px;
+    text-align: center;
+
+
+}
+
+.box11 {
+    height: 60px;
+    width: 128px;
+    display: inline-block;
+
+}
+
+.box11in {
+    height: 20px;
+    width: 125px;
+    margin-bottom: 12px;
+    color: white;
+
+}
+
+.box2 {
+    height: 320px;
+    width: 1033px;
+    margin-top: 20px;
+}
+
+.box21 {
+    width: 494px;
+    height: 300px;
+    color: rgb(177, 186, 195);
+    display: inline-block;
+    /* border: white solid 1px; */
+}
+
+.box21in {
+    width: 490px;
+    height: 290px;
+    margin: auto;
+    /* border: white solid 1px; */
+}
+
+.box3 {
+    width: 1033px;
+    height: 200px;
+    /* border: white solid 1px; */
+}
+
+.box31 {
+    width: 494px;
+    height: 185px;
+    color: rgb(177, 186, 195);
+    display: inline-block;
+    /* border: white solid 1px; */
+}
+
+.box31in {
+    width: 490px;
+    height: 180px;
+    margin: auto;
+    /* border: white solid 1px; */
+}
+
+.boxbottom {
+    height: 70px;
+    width: 1008px;
+    /* border: white solid 1px; */
+}
+
+.boxbottom1 {
+    height: 90px;
+    width: 595px;
+    /* border: white solid 1px; */
+    display: inline-block;
+    vertical-align: top
+}
+
+.boxbottom2 {
+    height: 60px;
+    width: 90px;
+    /* border: white solid 1px; */
+    display: inline-block;
+    vertical-align: top
+}
+
+.boxbottom3 {
+    height: 90px;
+    width: 295px;
+    /* border: white solid 1px; */
+    display: inline-block;
+    vertical-align: top
+}
+
+/* 选择box1中的p标签 */
+.box1 p {
+    color: white;
+    margin-top: 1px;
+
+
+}
+
+
+

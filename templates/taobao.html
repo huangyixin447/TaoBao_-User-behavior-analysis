@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/css/taobao.css">
+
+
+    <script src="../static/echarts.js"></script>
+    <script src="../static/js/checkAndShow_bar.js"></script>
+    <script src="../static/jquery-3.7.1.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="corner boxtop">
+        <span class="top-left"></span>
+        <span class="top-right"></span>
+        <span class="bottom-left"></span>
+        <span class="bottom-right"></span>
+        <label>淘宝用户行为大数据分析</label>
+    </div>
+    <div class="box1">
+        <div class="corner box11" >
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>用户</p>
+            <div class="box11in" id="user_number"></div>
+        </div>
+        <div class="corner box11 " >
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>商品</p>
+           <div class="box11in" id="product"></div>
+        </div>
+        <div class="corner box11 ">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>类别</p>
+            <div class="box11in" id="category"></div>
+        </div>
+        <div class="corner box11 " >
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>点击</p>
+            <div class="box11in" id="pv_num"></div>
+        </div>
+        <div class="corner box11 ">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>购买</p>
+            <div class="box11in" id="buy_number"></div>
+        </div>
+        <div class="corner box11 ">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>购物车</p>
+            <div class="box11in" id="buy_car"></div>
+        </div>
+        <div class="corner box11 ">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <p>收藏</p>
+            <div class="box11in" id="collect_num"></div>
+        </div>
+    </div>
+    <div class="box2">
+        <div class="corner box21">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <div class="box21in" id="daychart"></div>
+        </div>
+        <div class="corner box21">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <div class="box21in" id="hourchart"></div>
+        </div>
+    </div>
+    <div class="box3">
+        <div class="corner box31">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <div class="box31in" id="top1"></div>
+        </div>
+
+
+        <div class="corner box31">
+            <span class="top-left"></span>
+            <span class="top-right"></span>
+            <span class="bottom-left"></span>
+            <span class="bottom-right"></span>
+            <div class="box31in" id="top2"></div>
+        </div>
+
+
+    </div>
+
+
+   <div class="boxbottom">
+        <div class="boxbottom1"></div>
+        <div class="boxbottom2"></div>
+        <button class="btn1" id="total">总览</button>
+        <button class="btn1" id="top11">购买top10</button>
+        <button class="btn1" id="top10">点击Top10</button>
+
+   </div>
+
+
+
+
+</div>
+
+<script>
+
+   $(document).ready(function(){
+        {#pv统计#}
+        $("#top10").click(function(){
+            get_top_pv();
+
+
+
+
+        });
+        {#product_buy统计#}
+        $("#top11").click(function(){
+            get_top_buy();
+
+
+
+
+
+        });
+        $('#total').click(function(){
+            $.post("http://127.0.0.1:5001/time_action",function (data){
+                console.log(data)
+                var tmpdata =JSON.parse(data)
+                console.log("开始可视化")
+                var ret1=JSON.parse(tmpdata['result1'])
+                var ret2=JSON.parse(tmpdata['result2'])
+                let ech1=echarts.init(document.getElementById("daychart"))
+                console.log(ret1)
+                console.log(ret2)
+                let opt1=drawLine_time01(ret1)
+
+                console.log(opt1)
+                ech1.setOption(opt1)
+            {#    开是ret2 的渲染#}
+                let ech2=echarts.init(document.getElementById("hourchart"))
+                let opt2=drawLine_time02(ret2)
+                console.log(opt2)
+                ech2.setOption(opt2)
+
+
+
+
+
+
+            })
+        })
+
+
+
+
+
+        function get_top_pv() {
+            $.post("http://127.0.0.1:5001/show_pv_count", function (data) {
+                var timer = setInterval(() => {
+                    $.post("http://127.0.0.1:5001/checkstatus", function (data) {
+                        checkdData(data, "top1",timer,"点击top10");
+                    });
+                }, 300);
+            });
+        }
+        function get_top_buy(){
+             $.post("http://127.0.0.1:5001/show_buy_count", function (data) {
+                var timer1 = setInterval(() => {
+                    $.post("http://127.0.0.1:5001/checkstatus", function (data) {
+                        checkdData(data, "top2",timer1,"购买量top10");
+                    });
+                }, 300);
+            });
+
+        }
+        function get_act_count() {
+    // 开始运算
+            $.post("http://127.0.0.1:5001/run_total_count", async (data)=> {
+                // 检查status
+              await  console.log('checkdDataR');
+
+                    var status = await JSON.parse(data);
+                    console.log(status);
+
+
+                        console.log("开始")
+                        // 计算完毕
+                        // 开始解析json格式数据
+                        $.post("http://127.0.0.1:5001/get_Total_Count", function (data) {
+                            console.log("获取total")
+                            var tmpdata=JSON.parse(data)
+                            console.log(tmpdata)
+                            $("#user_number").text(tmpdata["user_total"])
+                            $("#product").text(tmpdata["product_total"])
+                            $("#category").text(tmpdata["type_total"])
+                            $("#pv_num").text(tmpdata["pv_total"])
+                            $("#buy_number").text(tmpdata["buy_total"])
+                            $("#buy_car").text(tmpdata["cart_total"])
+                            $("#collect_num").text(tmpdata["fav_total"])
+
+                        })
+
+
+            });
+        }
+
+        get_act_count()
+
+    });
+
+
+
+</script>
+</body>
+</html>

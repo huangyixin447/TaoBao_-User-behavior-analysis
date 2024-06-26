@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask-1</title>
+    <style>
+        .box{
+            width: 500px;
+            height: 180px;
+            border: 1px solid black;
+            /* display: inline-block; */
+            margin: auto
+        }
+        .inputbox{
+            width: 220px;
+            height: 125px;
+            display:block;
+            margin:auto;
+            /* border: 1px solid black; */
+        }
+    </style>
+    <script src="../static/jquery-3.7.1.js"></script>
+</head>
+<body>
+    <div class="box">
+        <div id="hint"></div>
+        <div class="inputbox">
+            <p>用户名: <input type="text" id="username" style="float:middle"/></p>
+            <p>密&nbsp;&nbsp;&nbsp;码: <input type="password" id="password" /></p>
+            <p><input id="login" type="button" value="登录"></p>
+        </div>
+    </div>
+    <script>
+        $("#login").click(
+            function(){
+                console.log('click');
+                $.post("http://127.0.0.1:5001/login", 
+                    {
+                        "username": $("#username").val(), 
+                        "password": $("#password").val()
+                    }, 
+                    function(data){
+                        httpbackstr(data);
+                    }
+                );
+            }
+        );
+
+        function httpbackstr(data){
+            console.log(data);
+            var backdata = JSON.parse(data);
+            var ret = backdata['loginresult'];
+            if(ret == -1){
+                var hint = "请重新输入密码";
+                $("#hint").text(hint);
+            }
+            else if(ret == -2){
+                var hint = "请重新输入用户名和密码";
+                $("#hint").text(hint);
+            }else{
+                var hint = "登录成功";
+                $("#hint").text(hint);
+                window.location.replace("http://127.0.0.1:5001/table");
+            }
+        }
+    </script>
+</body>
+</html>
