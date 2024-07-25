@@ -63,6 +63,7 @@ class StatisticClass:
             except StopIteration:
                 self.isrunning = False
                 break
+        #         将原来的索引变为df其中的一列
         procdf = procdf.groupby(['act']).sum().reset_index()
         print('Thread is over')
         self.result=[procdf.iloc[:,0].to_list(),procdf.iloc[:,1].to_list()]
